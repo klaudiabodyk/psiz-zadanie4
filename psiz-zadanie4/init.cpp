@@ -20,6 +20,17 @@ void LogWrite(const string info)
     log.close();
 }
 
+bool Checkfile(const string path){
+	vector<char> writable(path.begin(), path.end());
+	writable.push_back('\0');
+	if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(&*writable.begin()) && GetLastError()==ERROR_FILE_NOT_FOUND){
+    	return false;
+	}
+	else{
+		return true;
+	}
+}
+
 int main(int argc, char * argv[])
 {
 	string filename1, filename2;
