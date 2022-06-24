@@ -31,6 +31,18 @@ bool Checkfile(const string path){
 	}
 }
 
+void printSize(const string &address) {
+    fstream motd(address.c_str(), ios::binary | ios::in | ios::ate);
+    if (motd) {
+        fstream::pos_type size = motd.tellg();
+        cout << size << "B\n";
+    }
+    else {
+        perror(address.c_str());
+    }
+}
+}
+
 int main(int argc, char * argv[])
 {
 	string filename1, filename2;
