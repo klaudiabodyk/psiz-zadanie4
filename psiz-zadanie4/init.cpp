@@ -8,13 +8,16 @@
 
 
 
-void LogWrite(string info)
+void LogWrite(const string info)
 {
-	ofstream log;
-	time_t now = time(0);
-	log.open("log.txt", fstream::app ); 
-	log << localtime(&now )<< " | " << info <<endl;
-	log.close();
+    const string logpath = "log.txt";
+    time_t now = time(NULL);
+    char* datetime = ctime(&now);
+    ofstream log;
+    log.open(logpath, ios_base::app ); 
+    string logtemp; 
+    log << datetime + info + "\n";
+    log.close();
 }
 
 int main(int argc, char * argv[])
