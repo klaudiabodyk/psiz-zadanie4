@@ -2,4 +2,4 @@
 
 #Autorzy:
 
-Klaudia Bodyk
+Klaudia Bodyk & Maciej Sobieszczyk
