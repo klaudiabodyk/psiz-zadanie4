@@ -55,3 +55,76 @@ bool Checkfile(const string path){
         return true;
     }
 }
+
+void FileComparation(const string file1path, const string file2path){
+	char a{};
+	char b{};
+	int biterror;
+	long long int numberofbytes;
+	float BER =0;
+	cout<<" rozpoczynam porownywanie plikow "<<endl;
+	if (file1path == file2path) {
+		cout<<" podano nazwe tego samego pliku dwa razy. Przewidywany BER = 0"<<endl;
+		LogWrite(" podano nazwe tego samego pliku dwa razy. Przewidywany BER = 0");
+	}
+	if (!Checkfile(file1path)==false) {
+		cout<<"  nie znaleziono pliku :" + file1path <<endl;
+		LogWrite(" nie znaleziono pliku :" + file1path);
+	}
+	if (!Checkfile(file2path)==false)  {
+		cout<<"  nie znaleziono pliku :" + file2path <<endl;
+		LogWrite(" nie znaleziono pliku :" + file2path);
+	}
+	if ((Checkfile(file1path)==true) && (Checkfile(file2path)==true)){
+		cout<< "rozpoczeto obliczanie BER ... \n";
+		LogWrite("rozpoczeto obliczanie BER ...");
+		ifstream plik1(file1path, ios::binary | ios::in);
+		ifstream plik2(file2path, ios::binary | ios::in);
+		int i = 0;
+		while(!plik1.eof()){
+			plik1 >> a;
+			plik2 >> b;
+			
+			if (plik1.eof()) { break; } 
+			if (plik2.eof()) { break; }
+			
+			
+			numberofbytes = numberofbytes + 8;
+			BER = hammingDistance(a, b) + BER;
+			}
+		plik1.close();
+		plik2.close();
+		
+		stringstream stream;
+		stream << std::fixed << std::setprecision(0) << BER;
+		std::string s = stream.str();
+		cout<< " Obliczony BER = "+s<<endl;
+		LogWrite(" Obliczony BER = "+s);
+	}
+	
+}
+
+int main(int argc, char * argv[])
+{
+	string filename1, filename2;
+
+	LogWrite(" Start");
+	cout<<argc<<endl;
+	if( argc = 3)
+	{
+		filename1 = argv[1];
+		cout<<filename1+" wczytano plik1"<<endl;
+		filename2 = argv[2];
+		cout<<filename2+" wczytano plik2"<<endl;
+		printSize(filename1);
+		printSize(filename2);
+		FileComparation(filename1,filename2);
+	}
+	else
+	{
+	cout << "podano nieprawidlowa liczbe argumentow!" << endl;
+	exit;	
+	}
+
+
+}
